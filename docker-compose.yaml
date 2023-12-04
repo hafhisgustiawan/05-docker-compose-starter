@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  mongodb:
+    image: "mongo"
+    # --rm dan -d gak perlu krn udah default
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME: hafhis
+      - MONGO_INITDB_ROOT_PASSWORD: secret
+  backend:
+  frontend:
