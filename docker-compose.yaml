@@ -5,8 +5,58 @@ services:
     # --rm dan -d gak perlu krn udah default
     volumes:
       - data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME: hafhis
-      - MONGO_INITDB_ROOT_PASSWORD: secret
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: hafhis
+    #   MONGO_INITDB_ROOT_PASSWORD: secret
+    env_file:
+      - ./env/mongo.env
+    # networks:
+    #   - goals-net
+    # disini gak perlu tambahin network manual, krn semua service yang ada di docker-compose.yaml ini akan dibuatkan dan dimasukkan ke dalam sebuah network yang sama
+
   backend:
+    # property image hanya bisa digunakan ketika image sudah di build atau berasal dari docker hub (menggunakan url)
+    # image: 'goals-app'
+
+    # property build digunakan untuk melakukan build image berdasarkan Dockerfile pada path yang ditentukan dan menggunakannya sebagai image untuk container ini
+    # build:
+    #   context: .backend
+    #   dockerfile: Dockerfile
+    #   args:
+    #     some-args:1
+    build: ./backend
+    # container_name: backend
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
   frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    # dibawah ini pengganti -it
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+volumes:
+  data:
+  logs:
+# disini kita membuat volume kosong agar docker notice kalo ada named volume didalam container yang kita buat
+
+#UNTUK RUN DOCKER COMPOSE
+# - docker-compose up -d : untuk build semua image dan run semua container dengan detach mode
+# - docker-compose down : untuk stop dan menghapus semua container dan juga network, tetapi tidak dengan image dan named volume atau bind mount, kalo mau itu bisa nambahin -v
+
+#SIDE NOTE
+# ketika kita set docker compose ke down dan kita up lagi, docker compose tidak hanya akan rebuild ulang image. Dia hanya akan rebuild ketika ada perubahan kodingan di folder yang ditentukan path build nya.
