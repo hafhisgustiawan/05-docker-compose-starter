@@ -15,7 +15,7 @@ services:
     # disini gak perlu tambahin network manual, krn semua service yang ada di docker-compose.yaml ini akan dibuatkan dan dimasukkan ke dalam sebuah network yang sama
 
   backend:
-    # property image hanya bisa digunakan ketika image sudah di build atau berasal dari docker hub (menggunakan url)
+    # property image hanya bisa digunakan ketika image sudah di build atau berasal dari docker hub (menggunakan nama atau url)
     # image: 'goals-app'
 
     # property build digunakan untuk melakukan build image berdasarkan Dockerfile pada path yang ditentukan dan menggunakannya sebagai image untuk container ini
@@ -34,6 +34,7 @@ services:
       - /app/node_modules
     env_file:
       - ./env/backend.env
+    # depends_on ini membuat container menunggu container yang cantumkan selesai dulu baru running
     depends_on:
       - mongodb
 
@@ -43,7 +44,7 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend/src:/app/src
-    # dibawah ini pengganti -it
+    # dibawah ini pengganti -it atau interactive mode
     stdin_open: true
     tty: true
     depends_on:
