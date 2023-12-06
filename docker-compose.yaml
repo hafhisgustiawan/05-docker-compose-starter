@@ -34,7 +34,7 @@ services:
       - /app/node_modules
     env_file:
       - ./env/backend.env
-    # depends_on ini membuat container menunggu container yang cantumkan selesai dulu baru running
+    # depends_on ini membuat container menunggu container yang cantumkan selesai dulu baru running, bersifat list dan bisa lebih dari satu
     depends_on:
       - mongodb
 
@@ -44,7 +44,7 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend/src:/app/src
-    # dibawah ini pengganti -it atau interactive mode
+    # stdin_open dan tty ini pengganti -it atau interactive mode
     stdin_open: true
     tty: true
     depends_on:
