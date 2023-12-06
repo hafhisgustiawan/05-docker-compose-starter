@@ -2,7 +2,7 @@ version: "3.8"
 services:
   mongodb:
     image: "mongo"
-    # --rm dan -d gak perlu krn udah default
+    # --rm dan -d gak perlu krn udah default, container akan terhapus ketika run cmd 'docker-compose down'
     volumes:
       - data:/data/db
     # environment:
