@@ -2,6 +2,7 @@ version: "3.8"
 services:
   mongodb:
     image: "mongo"
+    # restart: unless-stopped
     # --rm dan -d gak perlu krn udah default, container akan terhapus ketika run cmd 'docker-compose down'
     volumes:
       - data:/data/db
@@ -44,7 +45,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - "3000:3000"
+      - "3000:80"
     # volumes:
     #   - ./frontend/src:/app/src
     # stdin_open dan tty ini pengganti -it atau interactive mode
