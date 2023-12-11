@@ -1,9 +1,10 @@
 version: "3.8"
+# service disini merepresentasikan container
 services:
   mongodb:
     image: "mongo"
     # restart: unless-stopped
-    # --rm dan -d gak perlu krn udah default, container akan terhapus ketika run cmd 'docker-compose down'
+    # --rm dan -d gak perlu krn udah default, container akan terhapus ketika run cmd 'docker-compose down' atau barengan delete volume dengan 'docker-compose down -v'
     volumes:
       - data:/data/db
     # environment:
