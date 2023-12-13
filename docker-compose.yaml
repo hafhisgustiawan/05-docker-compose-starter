@@ -31,9 +31,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - logs:/app/logs
-      - ./backend:/app
-      - /app/node_modules
+      - logs:/app/logs # named volume
+      - ./backend:/app # bind mount
+      - /app/node_modules # unnamed / temporary volume
     env_file:
       - ./env/backend.env
     # depends_on ini membuat container menunggu container yang cantumkan selesai dulu baru running, bersifat list dan bisa lebih dari satu
