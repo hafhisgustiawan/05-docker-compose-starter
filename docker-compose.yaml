@@ -29,7 +29,8 @@ services:
     build: ./backend
     # container_name: backend
     ports:
-      - "80:80"
+      # disini kita expose port 80 dari container ke port 3000 di host machine kita
+      - "3000:80"
     volumes:
       - logs:/app/logs # named volume
       - ./backend:/app # bind mount
@@ -46,8 +47,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      # disini kita expose port 80 dari container ke port 3000 di host machine kita
-      - "3000:80"
+      # disini kita expose port 80 dari container ke port 80 di host machine kita
+      - "80:80"
     # volumes:
     #   - ./frontend/src:/app/src
     # stdin_open dan tty ini pengganti -it atau interactive mode
